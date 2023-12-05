@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="clock_top">
+		<CBX_INST_ENTRY INSTANCE_NAME="|clock_top|counter:u0_counter|lpm_divide:Mod1" CBX_FILE_NAME="lpm_divide_3bm.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|clock_top|seg_driver:u0_seg_driver|lpm_divide:Div2" CBX_FILE_NAME="lpm_divide_ghm.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|clock_top|seg_driver:u0_seg_driver|lpm_divide:Mod1" CBX_FILE_NAME="lpm_divide_k9m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|clock_top|counter:u0_counter|lpm_divide:Div1" CBX_FILE_NAME="lpm_divide_0jm.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|clock_top|counter:u0_counter|lpm_divide:Mod0" CBX_FILE_NAME="lpm_divide_lcm.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|clock_top|seg_driver:u0_seg_driver|lpm_divide:Div1" CBX_FILE_NAME="lpm_divide_hhm.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|clock_top|seg_driver:u0_seg_driver|lpm_divide:Mod0" CBX_FILE_NAME="lpm_divide_k9m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|clock_top|seg_driver:u0_seg_driver|lpm_divide:Mod2" CBX_FILE_NAME="lpm_divide_j9m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|clock_top|counter:u0_counter|lpm_divide:Div0" CBX_FILE_NAME="lpm_divide_ikm.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|clock_top|seg_driver:u0_seg_driver|lpm_divide:Div0" CBX_FILE_NAME="lpm_divide_hhm.tdf"/>
+	</PROJECT>
+</LOG_ROOT>

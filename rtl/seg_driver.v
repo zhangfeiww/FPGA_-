@@ -1,0 +1,82 @@
+module seg_driver(
+	input	wire			clk		,
+	input	wire 			rstn	,
+	input	wire	[4:0]	hour	,
+	input	wire	[5:0]	min		,
+	input	wire	[5:0]	sec		,
+
+	output	wire	[7:0]	seg		,
+	output	wire	[5:0]	sel		
+);
+localparam		MAX_20US	=	10'd1_000;
+localparam		ZERO      = 8'b1100_0000	,
+         		ONE       = 8'b1111_1001	,
+         		TWO       = 8'b1010_0100	,
+         	 	THREE     = 8'b1011_0000	,
+         	 	FOUR      = 8'b1001_1001	,
+         	 	FIVE      = 8'b1001_0010	,
+         	 	SIX       = 8'b1000_0010	,
+         	 	SEVEN     = 8'b1111_1000	,
+         	 	EIGHT     = 8'b1000_0000	,
+         	 	NINE      = 8'b1001_0000	;
+
+
+			reg		[9:0]	cnt_20us		;
+			reg		[5:0]	sel_r			;
+			reg 	[3:0]   number      	;
+			reg 	[7:0]   seg_r       	;
+
+//20us counter
+always@(posedge clk or negedge rstn)begin
+	if(!rstn)
+		cnt_20us <= 26'd0;
+	else if (cnt_20us == MAX_20US -1'd1)
+		cnt_20us <= 26'd0;
+	else
+		cnt_20us <= cnt_20us + 1'd1;
+end
+
+//scan with 20us
+always @(posedge clk or negedge rstn)begin
+	if(!rstn)
+		sel_r <= 6'b111_110;
+	else if (cnt_20us == MAX_20US -1'd1)
+		sel_r <= {sel_r[4:0],sel_r[5]};
+	else
+		sel_r <= sel_r;
+end
+
+assign sel = sel_r;
+
+always @(*)begin
+	case(sel_r)
+		6'b111_110	:	number	=	sec % 10	;
+		6'b111_101	:	number	=	sec / 10	;
+		6'b111_011	:	number	=	min % 10	;
+		6'b110_111	:	number	=	min / 10	;
+		6'b101_111	:	number	=	hour % 10	;
+		6'b011_111	:	number	=	hour / 10	;
+		default		:	number	=	4'd0		;
+	endcase
+end
+
+
+always @(*)begin
+    case(number)
+        4'd0 : seg_r = (sel_r == 6'b111_011 || sel_r == 6'b101_111) ? ZERO   & 8'b0111_1111 : ZERO;
+        4'd1 : seg_r = (sel_r == 6'b111_011 || sel_r == 6'b101_111) ? ONE    & 8'b0111_1111 : ONE;
+        4'd2 : seg_r = (sel_r == 6'b111_011 || sel_r == 6'b101_111) ? TWO    & 8'b0111_1111 : TWO;
+        4'd3 : seg_r = (sel_r == 6'b111_011 || sel_r == 6'b101_111) ? THREE  & 8'b0111_1111 : THREE;
+        4'd4 : seg_r = (sel_r == 6'b111_011 || sel_r == 6'b101_111) ? FOUR   & 8'b0111_1111 : FOUR;
+        4'd5 : seg_r = (sel_r == 6'b111_011 || sel_r == 6'b101_111) ? FIVE   & 8'b0111_1111 : FIVE;
+        4'd6 : seg_r = (sel_r == 6'b111_011 || sel_r == 6'b101_111) ? SIX    & 8'b0111_1111 : SIX;
+        4'd7 : seg_r = (sel_r == 6'b111_011 || sel_r == 6'b101_111) ? SEVEN  & 8'b0111_1111 : SEVEN;
+        4'd8 : seg_r = (sel_r == 6'b111_011 || sel_r == 6'b101_111) ? EIGHT  & 8'b0111_1111 : EIGHT;
+        4'd9 : seg_r = (sel_r == 6'b111_011 || sel_r == 6'b101_111) ? NINE   & 8'b0111_1111 : NINE;
+        default: seg_r = ZERO		;
+    endcase
+end
+
+assign seg = seg_r;
+
+endmodule
